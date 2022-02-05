@@ -102,6 +102,16 @@ class Triangle:
             
         return shares
     
+    #Finding the centre of the triangle to help with mesh refinement
+    
+    def centreOfTriangle(self):
+        x_ = (self.NodeA[0] + self.NodeB[0] + self.NodeC[0]) / 3
+        y_ = (self.NodeA[1] + self.NodeB[1] + self.NodeC[1]) / 3
+        
+        centre = Nodes(x_, y_)
+        
+        return centre
+    
     #Plotting the triangle:
     
     def plot(self):
@@ -300,14 +310,27 @@ def delunayTriangulation(x,y):
     return delunay
     
     
+#Mesh refinement:
+    
+def refineMesh(x,y, meshToRefine):  #Takes a Delaaunay triangulation, and list of points in it and refines it
+    
 
-
+    #Adding the new points to the list of  points (centres of triangles)
+    for i in range(len(meshToRefine.listOfTriangles)):
+        x.append(meshToRefine.listOfTriangles[i].centreOfTriangle().xCoordinate)
+        y.append(meshToRefine.listOfTriangles[i].centreOfTriangle().yCoordinate)
+        
+    refinedMesh = delunayTriangulation(x, y)
+    
+    return refinedMesh    
+    
+    
 #Testing the function:
 
 
 #Generating a random set of n points:
 
-n = 100
+n = 50
 
 x = []
 y = []
@@ -321,3 +344,8 @@ for i in range(n):
     
 delunayTriangulation1 = delunayTriangulation(x,y)
 delunayTriangulation1.plotTriangulation()
+
+#Refining the mesh 
+
+delunayTriangulation2 = refineMesh(x,y,delunayTriangulation1)
+delunayTriangulation2.plotTriangulation()
