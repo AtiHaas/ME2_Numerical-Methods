@@ -207,7 +207,7 @@ def makeSuperTriangle(x,y):
     
     return superTriangle
 
-#The Boyer-Watson algorthm for making the optimal triangulation:
+#The Boyer-Watson algorthm for making the optimal triangulation: (https://www.youtube.com/watch?v=GctAunEuHt4)
 
 def delunayTriangulation(x,y): 
     
